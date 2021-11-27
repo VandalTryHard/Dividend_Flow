@@ -3,12 +3,14 @@
 
 import pandas as pd
 import plotly as pl
+import numpy as np
+import matplotlib as mp
 import csv
 
 
 def main():
     while True:
-        print("1) Show stocks in portfolio")
+        print(f"\n1) Show stocks in portfolio")
         print("2) Add a share")
         print("3) Delete share")
         print("4) Change stock")
@@ -16,8 +18,6 @@ def main():
         print("6) Show total and graph")
         print("7) Exit")
         user_choice = int(input("Enter: "))
-        fileStock = open("fileStock.csv", "a")
-        fileStock.close()
         if user_choice == 1:
             showStocks()
         elif user_choice == 2:
@@ -38,15 +38,46 @@ def main():
 
 
 def showStocks():
-    print("showStocks")
+    df = pd.read_csv("fileStock.csv")
+    print(df.head())
 
 
 def addShare():
-    print("addShare")
+    nameTicker = input("Name (ticker): ")
+    shareValue = float(input("Share value: "))
+    number = int(input("Number: "))
+    lastPayout = float(input("Last payout (%): "))
+    paymentEvery = int(input("Payment once every (days): "))
+    stockInformation = {"|Name (ticker)|": [nameTicker],
+                        "|Share value|": [shareValue],
+                        "|Number|": [number],
+                        "|Last payout %|": [lastPayout],
+                        "|Payment once every (days)|": [paymentEvery]}
+    fileStock = "fileStock.csv"
+    df = pd.DataFrame.from_dict(stockInformation)
+    df.to_csv(fileStock, header=False, index=False, mode='a')
 
 
+# ???????????????????????????????????????????????????????????????????????????????
 def deleteShare():
-    print("deleteShare")
+    df = pd.read_csv("fileStock.csv", encoding='utf-8')
+    df_np = df.to_numpy()
+    print(df_np)
+    userChoice = input("Enter Name (ticker): ")
+    # column = df['|Name (ticker)|']
+    for i in df_np:
+        if userChoice in i:
+            confirmation = input(f"Are you sure you want to delete {i}? (y/n): ")
+            confirmation = confirmation.lower()
+            if confirmation == 'y':
+                i = True
+                print(type(i))
+                np.delete(df_np, i)
+                print(df_np)
+                print("Delete.")
+            else:
+                print("Not deleted!")
+                main()
 
 
 def changeStock():
