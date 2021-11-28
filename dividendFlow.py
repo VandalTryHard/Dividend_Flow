@@ -6,6 +6,9 @@ import plotly as pl
 import numpy as np
 import matplotlib as mp
 import csv
+from datetime import datetime as dt
+
+df = pd.read_csv("fileStock.csv")
 
 
 def main():
@@ -14,7 +17,7 @@ def main():
         print("2) Add a share")
         print("3) Delete share")
         print("4) Change stock")
-        print("5) Select investment interval (in years)")
+        print("5) Select investment interval (in days)")
         print("6) Show total and graph")
         print("7) Exit")
         user_choice = int(input("Enter: "))
@@ -38,8 +41,9 @@ def main():
 
 
 def showStocks():
-    df = pd.read_csv("fileStock.csv")
-    print(df.head())
+    pd.set_option('display.max_columns', None)
+    pd.set_option('display.max_rows', df.shape[0]+1)
+    print(df)
 
 
 def addShare():
@@ -54,30 +58,41 @@ def addShare():
                         "|Last payout %|": [lastPayout],
                         "|Payment once every (days)|": [paymentEvery]}
     fileStock = "fileStock.csv"
-    df = pd.DataFrame.from_dict(stockInformation)
-    df.to_csv(fileStock, header=False, index=False, mode='a')
+    df_add = pd.DataFrame.from_dict(stockInformation)
+    df_add.to_csv(fileStock, header=False, index=False, mode='a')
 
 
-# ???????????????????????????????????????????????????????????????????????????????
 def deleteShare():
-    df = pd.read_csv("fileStock.csv", encoding='utf-8')
-    df_np = df.to_numpy()
-    print(df_np)
+    fileStock_del = csv.reader(open("fileStock.csv"))
+    rows = list(fileStock_del)
     userChoice = input("Enter Name (ticker): ")
-    # column = df['|Name (ticker)|']
-    for i in df_np:
-        if userChoice in i:
-            confirmation = input(f"Are you sure you want to delete {i}? (y/n): ")
-            confirmation = confirmation.lower()
-            if confirmation == 'y':
-                i = True
-                print(type(i))
-                np.delete(df_np, i)
-                print(df_np)
-                print("Delete.")
+    for row in rows:
+        if userChoice in row:
+            confirmation = input(f"Are you sure you want to delete {row}? (y/n): ")
+            if confirmation == "y":
+                rows.remove(row)
+                writer = csv.writer(open("fileStock.csv", "w", newline=""))
+                writer.writerows(rows)
+                print("Successfully deleted.")
+                main()
             else:
                 print("Not deleted!")
                 main()
+    print("Value Error")
+    # df = pd.read_csv("fileStock.csv", encoding='utf-8')
+    # df_np = df.to_numpy()
+    # print(df_np)
+    # userChoice = input("Enter Name (ticker): ")
+    # # column = df['|Name (ticker)|']
+    # for i in df_np:
+    #     if userChoice in i:
+    #         confirmation = input(f"Are you sure you want to delete {i}? (y/n): ")
+    #         confirmation = confirmation.lower()
+    #         if confirmation == 'y':
+    #             fileStock_del = csv.reader()
+    #         else:
+    #             print("Not deleted!")
+    #             main()
 
 
 def changeStock():
@@ -85,7 +100,10 @@ def changeStock():
 
 
 def selectInterval():
-    print("selectInterval")
+    today = int(dt.today().strftime('%d'))
+    userInvestmentTerm = int(input("Enter the investment period (in days): "))
+    daysInvest = today + userInvestmentTerm
+    print(f"You invested for {daysInvest} days")
 
 
 def showResults():
