@@ -8,6 +8,7 @@ import matplotlib as mp
 import csv
 from datetime import datetime as dt
 
+
 df = pd.read_csv("fileStock.csv")
 
 
