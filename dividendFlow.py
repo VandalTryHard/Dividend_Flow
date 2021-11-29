@@ -8,7 +8,6 @@ import matplotlib as mp
 import csv
 from datetime import datetime as dt
 
-
 df = pd.read_csv("fileStock.csv")
 
 
@@ -41,12 +40,16 @@ def main():
             main()
 
 
+# 1
 def showStocks():
+    df_view = pd.read_csv("fileStock.csv")
     pd.set_option('display.max_columns', None)
-    pd.set_option('display.max_rows', df.shape[0]+1)
-    print(df)
+    pd.set_option('display.max_rows', df_view.shape[0] + 1)
+    print(df_view)
+    print(df_view.dtypes)
 
 
+# 2
 def addShare():
     nameTicker = input("Name (ticker): ")
     shareValue = float(input("Share value: "))
@@ -57,12 +60,14 @@ def addShare():
                         "|Share value|": [shareValue],
                         "|Number|": [number],
                         "|Last payout %|": [lastPayout],
-                        "|Payment once every (days)|": [paymentEvery]}
+                        "|Payment once every (days)|": [paymentEvery],
+                        "|Investment term|": int, }
     fileStock = "fileStock.csv"
     df_add = pd.DataFrame.from_dict(stockInformation)
     df_add.to_csv(fileStock, header=False, index=False, mode='a')
 
 
+# 3
 def deleteShare():
     fileStock_del = csv.reader(open("fileStock.csv"))
     rows = list(fileStock_del)
@@ -96,15 +101,31 @@ def deleteShare():
     #             main()
 
 
+# 4
 def changeStock():
     print("changeStock")
 
 
+# 5
 def selectInterval():
-    today = int(dt.today().strftime('%d'))
-    userInvestmentTerm = int(input("Enter the investment period (in days): "))
-    daysInvest = today + userInvestmentTerm
-    print(f"You invested for {daysInvest} days")
+    # today = int(dt.today().strftime('%d'))
+    fileStock_Interval = csv.reader(open("fileStock.csv"))
+    rows = list(fileStock_Interval)
+    nameTicker = input("Enter Name (ticker): ")
+    for row in rows:
+        if nameTicker in row:
+            # print(row)
+            # print(type(row))
+            userInvestmentTerm = input("Enter the investment period (in days): ")
+            row[-1] = int(userInvestmentTerm)
+            print(f"You invested in {nameTicker} for {userInvestmentTerm} days ")
+            # print(type(row[-1]))
+            writer = csv.writer(open("fileStock.csv", "w", newline=""))
+            writer.writerows(rows)
+            # for nameTicker in row:
+            #     print(row)
+            #     writer = csv.writer(open("fileStock.csv", "w", newline=""))
+            #     writer.writerows(rows)
 
 
 def showResults():

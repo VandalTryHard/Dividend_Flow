@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 
 
 def creatingTable():
@@ -6,7 +7,8 @@ def creatingTable():
              "|Share value|": [42.8],
              "|Number|": [10],
              "|Last payout %|": [0.28],
-             "|Payment once every (days)|": [31], }
+             "|Payment once every (days)|": [31],
+             "|Investment term|": int, }
     df = pd.DataFrame.from_dict(table)
     print(df.head())
     print(df.dtypes)

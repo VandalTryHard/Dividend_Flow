@@ -1,7 +1,7 @@
-|Name (ticker)|,|Share value|,|Number|,|Last payout %|,|Payment once every (days)|
-STAG,42.8,10,0.28,31
-SLG,72.55,5,0.43,31
-O,69.4,2,0.35,31
-Coca-cola (CO),53.84,1,0.78,91
-Global Net Lease Inc (GNL),14.65,5,2.52,91
-INTC,48.66,2,0.69,91
+|Name (ticker)|,|Share value|,|Number|,|Last payout %|,|Payment once every (days)|,|Investment term|
+STAG,42.8,10,0.28,31,365
+SLG,72.55,5,0.43,31,6987
+O,69.4,2,0.35,31,<class 'int'>
+CO,53.84,1,0.78,91,<class 'int'>
+GNL,14.65,5,2.52,91,<class 'int'>
+INTC,48.66,2,0.69,91,<class 'int'>
