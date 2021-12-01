@@ -116,9 +116,15 @@ def selectInterval():
             # print(row)
             # print(type(row))
             userInvestmentTerm = input("Enter the investment period (in days): ")
-            row[-1] = int(userInvestmentTerm)
+            row[5] = int(userInvestmentTerm)
             print(f"You invested in {nameTicker} for {userInvestmentTerm} days ")
-            # print(type(row[-1]))
+
+            # "|Investment term|"
+            num_payments = int(row[5]/int(row[4]))
+            print(num_payments)
+            print(type(num_payments))
+            row[6] = round((float(((float(row[1]) * int(row[2]) * float(row[3])) / 100) * 70 / 100)) * num_payments, 2)
+
             writer = csv.writer(open("fileStock.csv", "w", newline=""))
             writer.writerows(rows)
             # for nameTicker in row:
@@ -128,36 +134,38 @@ def selectInterval():
 
 
 def showResults():
-    import math
-    today = dt.today().strftime('%d/%m/%y')
-    value_Share = float(df["|Share value|"][1])
-    numbers = int(df["|Number|"][1])
-    payout_Last = float(df["|Last payout %|"][1])
-    payment_once_every = int(df["|Payment once every (days)|"][1])
-    term_Inv = int(df["|Investment term|"][1])
-
-    terms = []
-    for t in range(0, term_Inv):
-        terms.append(t)
-
-    payments = []
-    for p in range(0, term_Inv):
-        p = float(p / payment_once_every)
-        payments.append(p)
-
-    values = []
-    for v in range(0, term_Inv):
-        v = float((((value_Share * numbers) * payout_Last / 100) * 70) / 100)  # с учетом налога так как недвига
-        values.append(v)
-
-    value = []
-    for v in values:
-        # реализовать изменение дохода от времени!!!!!!!!!!!!
-
-    x = terms
-    y = value
-    plt.plot(x, y)
-    plt.show()
+    print("6")
+    # import math
+    # today = dt.today().strftime('%d/%m/%y')
+    # value_Share = float(df["|Share value|"][1])
+    # numbers = int(df["|Number|"][1])
+    # payout_Last = float(df["|Last payout %|"][1])
+    # payment_once_every = int(df["|Payment once every (days)|"][1])
+    # term_Inv = int(df["|Investment term|"][1])
+    # div_Income = float(df["|Dividend income |"][1])
+    #
+    # terms = []
+    # for t in range(0, term_Inv):
+    #     terms.append(t)
+    #
+    # payments = []
+    # for p in range(0, term_Inv):
+    #     p = float(p / payment_once_every)
+    #     payments.append(p)
+    #
+    # values = []
+    # for v in range(0, term_Inv):
+    #     v = float((((value_Share * numbers) * payout_Last / 100) * 70) / 100)  # с учетом налога так как недвига
+    #     values.append(v)
+    #
+    # value = []
+    # for v in values:
+    #     # реализовать изменение дохода от времени!!!!!!!!!!!!
+    #
+    # x = terms
+    # y = value
+    # plt.plot(x, y)
+    # plt.show()
 
     # violate = (value_Share*numbers)*payout_Last/100
     # term =
