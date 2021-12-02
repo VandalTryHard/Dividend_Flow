@@ -61,7 +61,8 @@ def addShare():
                         "|Number|": [number],
                         "|Last payout %|": [lastPayout],
                         "|Payment once every (days)|": [paymentEvery],
-                        "|Investment term|": int, }
+                        "|Investment term|": int,
+                        "|Dividend income|": float, }
     fileStock = "fileStock.csv"
     df_add = pd.DataFrame.from_dict(stockInformation)
     df_add.to_csv(fileStock, header=False, index=False, mode='a')
@@ -85,25 +86,24 @@ def deleteShare():
                 print("Not deleted!")
                 main()
     print("Value Error")
-    # df = pd.read_csv("fileStock.csv", encoding='utf-8')
-    # df_np = df.to_numpy()
-    # print(df_np)
-    # userChoice = input("Enter Name (ticker): ")
-    # # column = df['|Name (ticker)|']
-    # for i in df_np:
-    #     if userChoice in i:
-    #         confirmation = input(f"Are you sure you want to delete {i}? (y/n): ")
-    #         confirmation = confirmation.lower()
-    #         if confirmation == 'y':
-    #             fileStock_del = csv.reader()
-    #         else:
-    #             print("Not deleted!")
-    #             main()
 
 
 # 4
 def changeStock():
-    print("changeStock")
+    fileStock_change = csv.reader(open("fileStock.csv"))
+    rows = list(fileStock_change)
+    userChoice = input("Enter Name (ticker): ")
+    for row in rows:
+        if userChoice in row:
+            confirmation = input(f"Are you sure you want to change {row}? (y/n): ")
+            if confirmation == "y":
+                rows.remove(row)
+                writer = csv.writer(open("fileStock.csv", "w", newline=""))
+                writer.writerows(rows)
+                addShare()
+            else:
+                print("Not deleted!")
+                main()
 
 
 # 5
@@ -113,24 +113,17 @@ def selectInterval():
     nameTicker = input("Enter Name (ticker): ")
     for row in rows:
         if nameTicker in row:
-            # print(row)
-            # print(type(row))
             userInvestmentTerm = input("Enter the investment period (in days): ")
             row[5] = int(userInvestmentTerm)
             print(f"You invested in {nameTicker} for {userInvestmentTerm} days ")
 
             # "|Investment term|"
             num_payments = int(row[5]/int(row[4]))
-            print(num_payments)
-            print(type(num_payments))
+
             row[6] = round((float(((float(row[1]) * int(row[2]) * float(row[3])) / 100) * 70 / 100)) * num_payments, 2)
 
             writer = csv.writer(open("fileStock.csv", "w", newline=""))
             writer.writerows(rows)
-            # for nameTicker in row:
-            #     print(row)
-            #     writer = csv.writer(open("fileStock.csv", "w", newline=""))
-            #     writer.writerows(rows)
 
 
 def showResults():

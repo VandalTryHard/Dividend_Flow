@@ -1,2 +1,4 @@
 |Name (ticker)|,|Share value|,|Number|,|Last payout %|,|Payment once every (days)|,|Investment term|,|Dividend income|
-STAG,42.8,10,0.28,31,285,7.55
+STAG,42.8,10,0.28,31,365,9.23
+O,67.35,2,0.35,31,365,3.63
+GNL,14.08,5,2.52,91,365,4.97
