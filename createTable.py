@@ -9,7 +9,10 @@ def creatingTable():
              "|Last payout %|": [0.28],
              "|Payment once every (days)|": [31],
              "|Investment term|": int,
-             "|Dividend income|": float, }
+             "|Dividend income|": float,
+             "|Date of addition (change) day-month-year |": str,
+             "|Tax %|": float,
+             }
 
     df = pd.DataFrame.from_dict(table)
     print(df.head())

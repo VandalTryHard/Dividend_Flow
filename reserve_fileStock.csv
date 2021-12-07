@@ -1,5 +1,4 @@
-|Name (ticker)|,|Share value|,|Number|,|Last payout %|,|Payment once every (days)|,|Investment term|,|Dividend income|
-STAG,42.8,10,0.28,31,365,9.23
-SLG,70.12,7,0.43,31,365,16.25
-O,67.35,2,0.35,31,365,3.63
-GNL,14.08,5,2.52,91,365,4.97
+|Name (ticker)|,|Share value|,|Number|,|Last payout %|,|Payment once every (days)|,|Investment term|,|Dividend income|,|Date of addition (change) day-month-year |,|Tax %|
+SLG,74.71,7,0.42,31,365,16.91,08-12-2021,30.0
+O,68.65,3,0.35,31,<class 'int'>,<class 'float'>,08-12-2021,30.0
+STAG,44.46,10,0.27,31,365,9.24,08-12-2021,30.0

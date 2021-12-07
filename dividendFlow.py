@@ -1,5 +1,7 @@
 """(RU) Данная программа рассчитывает сумму дивидентов
 """
+import time
+
 import matplotlib.pyplot as plt
 import pandas as pd
 import plotly as pl
@@ -16,7 +18,8 @@ def main():
         print(f"\n1) Show stocks in portfolio")
         print("2) Add a share")
         print("3) Delete share")
-        print("4) Change stock")
+        # print("4) Change stock")
+        print("4) Add change to your portfolio ")
         print("5) Select investment interval (in days)")
         print("6) Show total and graph")
         print("7) Exit")
@@ -56,13 +59,18 @@ def addShare():
     number = int(input("Number: "))
     lastPayout = float(input("Last payout (%): "))
     paymentEvery = int(input("Payment once every (days): "))
+    dateAdditionChange = input("Date of addition (change) day-month-year: ")
+    tax = float(input("Enter income tax: "))
     stockInformation = {"|Name (ticker)|": [nameTicker],
                         "|Share value|": [shareValue],
                         "|Number|": [number],
                         "|Last payout %|": [lastPayout],
                         "|Payment once every (days)|": [paymentEvery],
                         "|Investment term|": int,
-                        "|Dividend income|": float, }
+                        "|Dividend income|": float,
+                        "|Date of addition (change) day-month-year|": [dateAdditionChange],
+                        "|Tax %|": [tax],
+                        }
     fileStock = "fileStock.csv"
     df_add = pd.DataFrame.from_dict(stockInformation)
     df_add.to_csv(fileStock, header=False, index=False, mode='a')
@@ -81,10 +89,10 @@ def deleteShare():
                 writer = csv.writer(open("fileStock.csv", "w", newline=""))
                 writer.writerows(rows)
                 print("Successfully deleted.")
-                main()
+                break
             else:
                 print("Not deleted!")
-                main()
+                break
     print("Value Error")
 
 
@@ -95,15 +103,17 @@ def changeStock():
     userChoice = input("Enter Name (ticker): ")
     for row in rows:
         if userChoice in row:
-            confirmation = input(f"Are you sure you want to change {row}? (y/n): ")
+            confirmation = input(f"Are you sure you want add change to your portfolio {row}? (y/n): ")
+            # confirmation = input(f"Are you sure you want to change {row}? (y/n): ")
             if confirmation == "y":
-                rows.remove(row)
-                writer = csv.writer(open("fileStock.csv", "w", newline=""))
-                writer.writerows(rows)
+                # rows.remove(row)
+                # writer = csv.writer(open("fileStock.csv", "w", newline=""))
+                # writer.writerows(rows)
                 addShare()
+                break
             else:
-                print("Not deleted!")
-                main()
+                print("Not change!")
+                break
 
 
 # 5
@@ -120,10 +130,14 @@ def selectInterval():
             # "|Investment term|"
             num_payments = int(row[5]/int(row[4]))
 
-            row[6] = round((float(((float(row[1]) * int(row[2]) * float(row[3])) / 100) * 70 / 100)) * num_payments, 2)
+            row[6] = round((float(((float(row[1]) * int(row[2]) * float(row[3])) / 100) * (100-float(row[8])) / 100)) *
+                           num_payments, 2)
 
             writer = csv.writer(open("fileStock.csv", "w", newline=""))
             writer.writerows(rows)
+        # else:
+        #     print("error")
+        #     break
 
 
 def showResults():
