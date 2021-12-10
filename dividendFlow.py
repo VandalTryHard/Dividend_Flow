@@ -1,5 +1,6 @@
 """(RU) Доход с дивидендов
 (EN) Dividend income
+v0.6
 """
 
 import matplotlib.pyplot as plt
